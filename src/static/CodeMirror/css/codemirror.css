@@ -3,8 +3,10 @@
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
-  height: 300px;
+  height: 128px;
+  margin-top: -64px;
   color: black;
+  outline: 2px solid #444;
 }
 
 /* PADDING */

@@ -38,13 +38,17 @@
 
     function setup() {
         window.addEventListener('keydown', parseKeydown, true);
-        btnSubmit.addEventListener('click', toggleCodeMode, true);
+        btnSubmit.addEventListener('click', () => {
+            codeMirror.setValue('');
+            toggleCodeMode();
+        }, true);
         codeMirror = window.CodeMirror(el => {
             el.hidden = true;
             input.parentNode.insertBefore(el, input);
         }, {
             value: input.value,
-            theme: 'monokai'
+            theme: 'monokai',
+            mode: 'javascript'
         });
         codeMirror.on('change', updateInput);
     }
@@ -53,6 +57,8 @@
         let lines = codeMirror.getValue();
         if( lines ) {
             input.value = lines.split(/\r\n|\n/g).map(line=>`    ${line}`).join('\r\n');
+        } else {
+            input.value = '';
         }
     }
 

@@ -6,8 +6,8 @@
 	"content_scripts": [
 		{
 			"matches" : ["*://chat.stackoverflow.com/*","*://chat.stackexchange.com/*","*://chat.meta.stackexchange.com/*"],
-			"js": ["CodeMirror/js/codemirror.js","script.js"],
-			"css": ["CodeMirror/css/codemirror.css","style.css"]
+			"js": ["CodeMirror/js/codemirror.js","CodeMirror/mode/javascript/javascript.js","script.js"],
+			"css": ["CodeMirror/css/codemirror.css","CodeMirror/css/monokai.css","style.css"]
 		}
 	],
 	"options_page": "options.html",
