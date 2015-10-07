@@ -16,7 +16,7 @@ Available for Chrome here: https://chrome.google.com/webstore/detail/so-dark-cha
 
 For development versions:  
 
-Download the project (or just copy the contents out of /dist) 
+Download the project and run the gulpfile
 
 Open `chrome://extensions` and click on the <kbd>Load unpacked extension...</kbd> button. 
 

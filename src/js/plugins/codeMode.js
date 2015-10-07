@@ -43,7 +43,8 @@
             el.hidden = true;
             input.parentNode.insertBefore(el, input);
         }, {
-            value: input.value
+            value: input.value,
+            theme: 'monokai'
         });
         codeMirror.on('change', updateInput);
     }
