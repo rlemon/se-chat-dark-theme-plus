@@ -45,12 +45,14 @@
         }, {
             value: input.value
         });
-        codeMirror.on('change', o => {
-            let lines = codeMirror.getValue();
-            if( lines ) {
-                input.value = lines.split(/\r\n|\n/g).map(line=>`    ${line}`).join('\r\n');
-            }
-        });
+        codeMirror.on('change', updateInput);
+    }
+
+    function updateInput() {
+        let lines = codeMirror.getValue();
+        if( lines ) {
+            input.value = lines.split(/\r\n|\n/g).map(line=>`    ${line}`).join('\r\n');
+        }
     }
 
     function parseKeydown(event) {
@@ -64,6 +66,7 @@
 
     function toggleCodeMode() {
         if( input.hidden ) {
+            updateInput(); 
             input.hidden = false;
             input.focus();
             if( input.value ) {
