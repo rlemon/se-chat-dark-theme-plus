@@ -4,7 +4,7 @@ work in progress theme for StackExchange chats, also includes 'plugins' for addi
   
 [![](http://i.imgur.com/RLxQIoP.png)](http://i.imgur.com/cVSJtWC.png)
   
-Features include: 
+Features include:   
 1) Inline webm/gifv  
 2) user colours  
 3) code-mode ([see here](http://i.imgur.com/XdJD87b.webm)) activated with ctrl + k  
