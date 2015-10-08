@@ -1,25 +1,18 @@
-# StackExchange Chat Dark Theme Plus!
+## SE Chat Dark Theme Plus
 
-This is the new home for rlemon's dark theme. 
+work in progress theme for StackExchange chats, also includes 'plugins' for additional features. 
 
-restyled Olivers original and added a bunch of JS "features".   
+[![](http://i.imgur.com/RLxQIoP.png)](http://i.imgur.com/cVSJtWC.png)
 
-Why the change? The re-write of this is more modular and I didn't feel like managing a new branch. 
+Features include: 
+1) Inline webm/gifv  
+2) user colours  
+3) code-mode ([see here](http://i.imgur.com/XdJD87b.webm)) activated with ctrl + k
+4) Syntax Highlighting
+5) Other stuff I can't think of. 
 
-![](http://i.imgur.com/xxMPtoI.png)
+### [Install for Chrome](https://chrome.google.com/webstore/detail/so-dark-chat-%20/bbkjccfnenmgidehjhaabamobpbaaghh)
 
-Only tested in Chrome. FireFox is on the roadmap. IE is smelly and will not get support. 
+Please report all issues and feature requests. 
 
-### Usage 
-
-Available for Chrome here: https://chrome.google.com/webstore/detail/so-dark-chat-%20/bbkjccfnenmgidehjhaabamobpbaaghh  
-
-For development versions:  
-
-Download the project and run the gulpfile
-
-Open `chrome://extensions` and click on the <kbd>Load unpacked extension...</kbd> button. 
-
-Find the `dist` folder on your computer and load that. 
-
-Please report any issues. 
+*[old repo](https://github.com/rlemon/se-chat-dark-theme) for history*
