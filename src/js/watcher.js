@@ -33,4 +33,4 @@ class Watcher {
         [...removed].forEach(node => this.watchers.forEach(watcher => watcher(node)));
     }
 }
-let watcher = new Watcher(chat);
+let watcher = new Watcher(document.body);
