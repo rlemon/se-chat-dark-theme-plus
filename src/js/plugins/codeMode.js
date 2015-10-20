@@ -20,7 +20,7 @@
     window.addEventListener('keydown', parseKeydown, true);
     btnSubmit.addEventListener('click', () => {
         codeMirror.setValue('');
-        toggleCodeMode();
+        hideCodeMode();
     }, true);
     codeMirror = window.CodeMirror(el => {
         el.hidden = true;
@@ -42,12 +42,12 @@
     }
 
     function parseKeydown(event) {
-        if (event.ctrlKey && event.which === 75) {
+        if (event.ctrlKey && event.which === 75) { // Ctrl + k toggles codeMode
             toggleCodeMode();
             stopEvent(event);
         } else if (event.ctrlKey && event.which === 13 && input.hidden) { // ctrl + enter on code mode sends.
             btnSubmit.click(); // trigger send. 
-        } else if (event.which === 27 && input.hidden) {
+        } else if (event.which === 27 && input.hidden) { // Escape key hides
             codeMirror.setValue('');
             toggleCodeMode();
             stopEvent(event);
@@ -67,28 +67,36 @@
 
     function toggleCodeMode() {
         if (input.hidden) {
-            updateInput();
-            input.hidden = false;
-            input.focus();
-            if (input.value) {
-                input.value = input.value.split(/\r\n|\n/g).map(line => {
-                    if (line.substr(0, 4) === '    ') {
-                        return line.slice(4);
-                    } else {
-                        console.log('how did I even hit');
-                        return line;
-                    }
-                }).join('\r\n');
-            }
-            modeSelect.hidden = true;
-            codeMirror.display.wrapper.hidden = true;
+            hideCodeMode();
         } else {
-            input.hidden = true;
-            codeMirror.display.wrapper.hidden = false;
-            codeMirror.setValue(input.value);
-            codeMirror.focus();
-            modeSelect.hidden = false;
+            showCodeMode();
         }
+    }
+
+    function showCodeMode() {
+        input.hidden = true;
+        codeMirror.display.wrapper.hidden = false;
+        codeMirror.setValue(input.value);
+        codeMirror.focus();
+        modeSelect.hidden = false;
+    }
+
+    function hideCodeMode() {
+        updateInput();
+        input.hidden = false;
+        input.focus();
+        if (input.value) {
+            input.value = input.value.split(/\r\n|\n/g).map(line => {
+                if (line.substr(0, 4) === '    ') {
+                    return line.slice(4);
+                } else {
+                    console.log('how did I even hit');
+                    return line;
+                }
+            }).join('\r\n');
+        }
+        modeSelect.hidden = true;
+        codeMirror.display.wrapper.hidden = true;
     }
 }());
 //.setOption("mode", language);
