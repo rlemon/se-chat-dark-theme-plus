@@ -3,8 +3,11 @@ const highlightParser = node => {
     if (node.classList.contains('message')) {
     	let pre = node.querySelector('pre');
     	let moreLink = node.querySelector('.more-data');
-    	if(pre && moreLink) {
-    		window.hljs.highlightBlock(pre);
+      if(pre) {
+        window.hljs.highlightBlock(pre);
+      }
+      
+    	if(moreLink) {
     		moreLink = removeAllListeners(moreLink);
     		moreLink.addEventListener('click', (e) => highlightFullText(e, pre));
     	}
