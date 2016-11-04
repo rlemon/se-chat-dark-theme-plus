@@ -15,6 +15,9 @@
   background-color: #222;
 	color: #ddd;
 	border: none;
+    border-top: solid .25em #121212;
+    -webkit-transition: border-top-color 0.275s cubic-bezier(.39,.95,.7,1);
+	transition: border-top-color 0.275s cubic-bezier(.39,.95,.7,1);
 	border-radius: 0;
 
   .pending {
@@ -30,7 +33,7 @@
   }
 }
 
-// not sure this is the best place for this. I'm getting used to organizing these still. 
+// not sure this is the best place for this. I'm getting used to organizing these still.
 div.message .meta,
 .timestamp {
   background-color: #333;
