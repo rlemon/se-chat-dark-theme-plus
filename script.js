@@ -6,7 +6,7 @@ const defaults = {
 
 	collapse_onebox: true, 				// can collapse
 
-	collapse_onebox_default: false, 		// default option for collapse
+	collapse_onebox_default: false, 	// default option for collapse
 
 	user_color_bars: true,				// show colored bars above users message blocks
 
@@ -20,8 +20,9 @@ const defaults = {
 
 	emoji_translator: true,				// emoji translator for INPUT area
 
-	code_mode_editor: true				// uses CodeMirror for your code inputs
+	code_mode_editor: true,				// uses CodeMirror for your code inputs
 
+	mention_color: '#2244aa'			// default colour for @mention
 
 };
 
@@ -34,6 +35,7 @@ const fileLocations = {
 	visualize_hex: ['js/visualize_hex.js'],
 	syntax_highlight_code: ['js/highlight.js', 'js/syntax_highlight_code.js'],
 	emoji_translator: ['js/emojidata.js', 'js/emoji_translator.js'],
+	mention_color: ['js/mention_color.js'],
 	code_mode_editor: ['CodeMirror/js/codemirror.js',
 						'CodeMirror/mode/cmake/cmake.js',
 						'CodeMirror/mode/cobol/cobol.js',
