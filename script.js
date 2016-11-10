@@ -6,7 +6,9 @@ const defaults = {
 
 	collapse_onebox: true, 				// can collapse
 
-	collapse_onebox_default: false, 		// default option for collapse
+	collapse_onebox_default: false, 	// default option for collapse
+
+	pause_youtube_on_collapse: true, 	// default option for pausing youtube on collapse
 
 	user_color_bars: true,				// show colored bars above users message blocks
 

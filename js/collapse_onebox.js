@@ -21,6 +21,7 @@ function prettyLink(url, limit = 54) {
 }
 function collapseOnebox(node) {
     const autoCollapse = options.collapse_onebox_default;
+    const pauseYoutubeOnCollapse = options.pause_youtube_on_collapse;
     if( !node.classList || !node.classList.contains('message') || node.classList.contains('pending') ) return;
     const ob = node.querySelector('.onebox');
     const tb = node.querySelector('.toggle-bar-dark-theme');
@@ -42,7 +43,7 @@ function collapseOnebox(node) {
         this.innerHTML = (isOpen === TRUE ? lblClose : lblOpen) + anchor;
         this.nextElementSibling.hidden = isOpen === FALSE;
         const youtube = container.querySelector('iframe.youtube-onebox');
-        if(youtube) {
+        if(youtube && pauseYoutubeOnCollapse) {
             const {contentWindow} = youtube;
             const func = isOpen === FALSE ? 'pauseVideo' : 'playVideo';
             contentWindow.postMessage(`{"event":"command","func":"${func}","args":""}`, '*');
