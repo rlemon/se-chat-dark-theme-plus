@@ -99,7 +99,7 @@ function init(options) {
 	for( const key of Object.keys(options) ) {
 		if( !options[key] || !( key in fileLocations)) continue;
 		for( const location of fileLocations[key] ) {
-			const [,type] = location.split('.');
+			const type = location.substr((~-location.lastIndexOf(".") >>> 0) + 2);
 			loading.push({location, type});
 		}
 	}
