@@ -3963,4 +3963,7 @@ const emojiData = [{
 }, {
   "emoji": "🇿🇼",
   "triggers": [":zimbabwe:"]
+}, {
+  "emoji": "🤷",
+  "triggers": [":shrug:", ":shrugging:"]
 }];
