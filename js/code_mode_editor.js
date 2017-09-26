@@ -73,11 +73,31 @@
     }
 
     function showCodeMode() {
+        const lines = input.value.split('\n');
+        let charsLeft = input.selectionEnd;
+        let lineCount = 0;
+        let maxLineCount = lines.length;
+        let lineChars = lines[lineCount].length;
+
+        while(charsLeft > lineChars) {
+            charsLeft -= lineChars + 1;
+            ++lineCount;
+
+            if(lineCount < maxLineCount) {
+                lineChars = lines[lineCount].length;
+            } else {
+                break;
+            }
+        }
+
         input.hidden = true;
         codeMirror.display.wrapper.hidden = false;
         codeMirror.setValue(input.value);
+
+        codeMirror.setCursor({ line: lineCount, ch: charsLeft });
         codeMirror.focus();
         modeSelect.hidden = false;
+
     }
 
     function hideCodeMode() {
@@ -94,6 +114,7 @@
                 }
             }).join('\r\n');
         }
+        input.selectionStart = input.selectionEnd = codeMirror.getRange({ line: 0, ch: 0 }, codeMirror.getCursor()).length;
         modeSelect.hidden = true;
         codeMirror.display.wrapper.hidden = true;
     }
