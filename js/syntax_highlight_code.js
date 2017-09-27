@@ -4,6 +4,14 @@ const highlightParser = node => {
     	let pres = node.querySelectorAll('pre');
     	[...pres].forEach(pre => {
     		window.hljs.highlightBlock(pre);
+        if(pre.classList.contains('partial')) {
+          let moreDataButton = node.querySelector('a.more-data');
+          DOMObserver.addWatcher((removed) => {
+            if(removed === moreDataButton) {
+              window.hljs.highlightBlock(pre);
+            }
+          })
+        }
     	});
     }
 };
