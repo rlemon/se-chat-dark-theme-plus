@@ -34,7 +34,7 @@ const fileLocations = {
 	fish_spinner: ['js/fish_spinner.js'],
 	inline_imgur: ['js/inline_imgur.js'],
 	visualize_hex: ['js/visualize_hex.js'],
-	syntax_highlight_code: ['js/highlight.js', 'js/syntax_highlight_code.js'],
+	syntax_highlight_code: ['js/highlight.js', 'js/syntax_highlight_code.js', 'css/highlight.css'],
 	emoji_translator: ['js/emojidata.js', 'js/emoji_translator.js'],
 	code_mode_editor: ['CodeMirror/js/codemirror.js',
 						'CodeMirror/mode/cmake/cmake.js',
