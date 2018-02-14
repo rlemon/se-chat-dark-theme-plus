@@ -6,6 +6,9 @@
     "build": "gulp"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.59",
+    "@types/codemirror": "^0.0.55",
+    "eslint": "^4.17.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.1",
     "gulp-cssmin": "^0.1.7",

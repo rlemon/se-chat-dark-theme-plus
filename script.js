@@ -1,4 +1,5 @@
-const defaults = {
+//@ts-check
+const defaultOptions = {
 
 	base_css: true,						// the base dark theme css
 
@@ -39,107 +40,136 @@ const fileLocations = {
 	syntax_highlight_code: ['js/highlight.js', 'js/syntax_highlight_code.js'],
 	emoji_translator: ['js/emojidata.js', 'js/emoji_translator.js'],
 	code_mode_editor: ['CodeMirror/js/codemirror.js',
-						'CodeMirror/mode/cmake/cmake.js',
-						'CodeMirror/mode/cobol/cobol.js',
-						'CodeMirror/mode/coffeescript/coffeescript.js',
-						'CodeMirror/mode/commonlisp/commonlisp.js',
-						'CodeMirror/mode/css/css.js',
-						'CodeMirror/mode/dart/dart.js',
-						'CodeMirror/mode/go/go.js',
-						'CodeMirror/mode/groovy/groovy.js',
-						'CodeMirror/mode/haml/haml.js',
-						'CodeMirror/mode/haskell/haskell.js',
-						'CodeMirror/mode/htmlembedded/htmlembedded.js',
-						'CodeMirror/mode/htmlmixed/htmlmixed.js',
-						'CodeMirror/mode/jade/jade.js',
-						'CodeMirror/mode/javascript/javascript.js',
-						'CodeMirror/mode/lua/lua.js',
-						'CodeMirror/mode/markdown/markdown.js',
-						'CodeMirror/mode/mathematica/mathematica.js',
-						'CodeMirror/mode/nginx/nginx.js',
-						'CodeMirror/mode/pascal/pascal.js',
-						'CodeMirror/mode/perl/perl.js',
-						'CodeMirror/mode/php/php.js',
-						'CodeMirror/mode/puppet/puppet.js',
-						'CodeMirror/mode/python/python.js',
-						'CodeMirror/mode/ruby/ruby.js',
-						'CodeMirror/mode/sass/sass.js',
-						'CodeMirror/mode/scheme/scheme.js',
-						'CodeMirror/mode/shell/shell.js' ,
-						'CodeMirror/mode/sql/sql.js',
-						'CodeMirror/mode/swift/swift.js',
-						'CodeMirror/mode/twig/twig.js',
-						'CodeMirror/mode/vb/vb.js',
-						'CodeMirror/mode/vbscript/vbscript.js',
-						'CodeMirror/mode/vhdl/vhdl.js',
-						'CodeMirror/mode/vue/vue.js',
-						'CodeMirror/mode/xml/xml.js',
-						'CodeMirror/mode/xquery/xquery.js',
-						'CodeMirror/mode/yaml/yaml.js',
-						'js/code_mode_editor.js']
+		'CodeMirror/mode/cmake/cmake.js',
+		'CodeMirror/mode/cobol/cobol.js',
+		'CodeMirror/mode/coffeescript/coffeescript.js',
+		'CodeMirror/mode/commonlisp/commonlisp.js',
+		'CodeMirror/mode/css/css.js',
+		'CodeMirror/mode/dart/dart.js',
+		'CodeMirror/mode/go/go.js',
+		'CodeMirror/mode/groovy/groovy.js',
+		'CodeMirror/mode/haml/haml.js',
+		'CodeMirror/mode/haskell/haskell.js',
+		'CodeMirror/mode/htmlembedded/htmlembedded.js',
+		'CodeMirror/mode/htmlmixed/htmlmixed.js',
+		'CodeMirror/mode/jade/jade.js',
+		'CodeMirror/mode/javascript/javascript.js',
+		'CodeMirror/mode/lua/lua.js',
+		'CodeMirror/mode/markdown/markdown.js',
+		'CodeMirror/mode/mathematica/mathematica.js',
+		'CodeMirror/mode/nginx/nginx.js',
+		'CodeMirror/mode/pascal/pascal.js',
+		'CodeMirror/mode/perl/perl.js',
+		'CodeMirror/mode/php/php.js',
+		'CodeMirror/mode/puppet/puppet.js',
+		'CodeMirror/mode/python/python.js',
+		'CodeMirror/mode/ruby/ruby.js',
+		'CodeMirror/mode/sass/sass.js',
+		'CodeMirror/mode/scheme/scheme.js',
+		'CodeMirror/mode/shell/shell.js',
+		'CodeMirror/mode/sql/sql.js',
+		'CodeMirror/mode/swift/swift.js',
+		'CodeMirror/mode/twig/twig.js',
+		'CodeMirror/mode/vb/vb.js',
+		'CodeMirror/mode/vbscript/vbscript.js',
+		'CodeMirror/mode/vhdl/vhdl.js',
+		'CodeMirror/mode/vue/vue.js',
+		'CodeMirror/mode/xml/xml.js',
+		'CodeMirror/mode/xquery/xquery.js',
+		'CodeMirror/mode/yaml/yaml.js',
+		'js/code_mode_editor.js']
 };
 
 
 // right now I assume order is correct because I'm a terrible person. make an order array or base it on File Locations and make that an array
 
 // inject the observer and the utils always. then initialize the options.
-injector([{type: 'js', location: 'js/observer.js'},{type: 'js', location: 'js/utils.js'}], _ => chrome.storage.sync.get(defaults, init));
+injectMany([
+	{ type: 'js', location: 'js/observer.js' },
+	{ type: 'js', location: 'js/utils.js' }
+])
+	.then(() => chrome.storage.sync.get(defaultOptions, init));
 
-function init(options) {
+/**
+ * Initialize extension lifecycle
+ * Inject all the scripts/css files, set everything in motion.
+ * @param {typeof defaultOptions} options Options to initialize the extension lifecycle with
+ */
+async function init(options) {
 	// inject the options for the plugins themselves.
 	const opts = document.createElement('script');
 	opts.textContent = `
 		const options = ${JSON.stringify(options)};
 	`;
 	document.body.appendChild(opts);
+
 	// now load the plugins.
-	const loading = [];
-	if( !options.base_css ) {
+	if (!options.base_css) {
 		document.documentElement.classList.add('nocss');
 	}
 	delete options.base_css;
-	for( const key of Object.keys(options) ) {
-		if( !options[key] || !( key in fileLocations)) continue;
-		for( const location of fileLocations[key] ) {
-			const [,type] = location.split('.');
-			loading.push({location, type});
-		}
-	}
-	injector(loading, _ => {
-		const drai = document.createElement('script');
-		drai.textContent = `
+	const itemsToLoad = Object.keys(options)
+		.filter(key => options[key] && key in fileLocations)
+		.reduce((result, key) =>
+			result.concat(fileLocations[key]
+				.map(location => ({ location, type: location.split('.')[0] }))
+			)
+			, []);
+
+	await injectMany(itemsToLoad);
+	const drai = document.createElement('script');
+	drai.textContent = `
 		if( document.readyState === 'complete' ) {
 			DOMObserver.drain();
 		} else {
 			window.onload = _ => DOMObserver.drain();
 		}
-		`;
-		document.body.appendChild(drai);
+	`;
+	document.body.appendChild(drai);
+}
+
+/**
+ * Injects arbitrary items (scripts or styles) into the page.
+ * @param {ReadonlyArray<{type: 'js' | 'css', location: string}>} items List of items to inject
+ */
+async function injectMany(items) {
+	if (items.length === 0) return;
+	return await Promise.all(items.map(async (item) => {
+		if (item.type === 'js') {
+			return injectJS(item.location);
+		} else if (item.type === 'css') {
+			return injectCSS(item.location);
+		}
+	}));
+}
+
+/**
+ * Inject a single CSS file into the page.
+ * @param {string} file Location of the file relative to the extension root.
+ */
+async function injectCSS(file) {
+	return await new Promise((resolve, reject) => {
+		const elm = document.createElement('link');
+		elm.rel = 'stylesheet';
+		elm.type = 'text/css';
+		elm.href = chrome.extension.getURL(file);
+		elm.onload = resolve;
+		elm.onerror = reject;
+		document.head.appendChild(elm);
 	});
 }
 
-function injector([first, ...rest], cb) {
-	if( !first ) return cb();
-	if( first.type === 'js' ) {
-		injectJS(first.location, _ => injector(rest, cb));
-	} else {
-		injectCSS(first.location, _ => injector(rest, cb));
-	}
-}
-
-function injectCSS(file, cb) {
-	const elm = document.createElement('link');
-	elm.rel = 'stylesheet';
-	elm.type = 'text/css';
-	elm.href = chrome.extension.getURL(file);
-	elm.onload = cb;
-	document.head.appendChild(elm);
-}
-
-function injectJS(file, cb) {
-	const elm = document.createElement('script');
-	elm.type = 'text/javascript';
-	elm.src = chrome.extension.getURL(file);
-	elm.onload = cb;
-	document.body.appendChild(elm);
+/**
+ * Inject a single JS file into the page.
+ * @param {string} file Location of the file relative to the extension root.
+ */
+async function injectJS(file) {
+	return await new Promise((resolve, reject) => {
+		const elm = document.createElement('script');
+		elm.type = 'text/javascript';
+		elm.src = chrome.extension.getURL(file);
+		elm.onload = resolve;
+		elm.onerror = reject;
+		document.body.appendChild(elm);
+	});
 }
