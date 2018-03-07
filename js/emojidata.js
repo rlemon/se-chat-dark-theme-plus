@@ -3963,4 +3963,7 @@ const emojiData = [{
 }, {
   "emoji": "🇿🇼",
   "triggers": [":zimbabwe:"]
+}, {
+  "emoji": "( ͡° ͜ʖ ͡°)",
+  "triggers": [":lenny:", ":lenny_face:"]
 }];
