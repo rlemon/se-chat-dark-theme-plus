@@ -43,10 +43,9 @@ function collapseOnebox(node) {
         this.innerHTML = (isOpen === TRUE ? lblClose : lblOpen) + anchor;
         this.nextElementSibling.hidden = isOpen === FALSE;
         const youtube = container.querySelector('iframe.youtube-onebox');
-        if(youtube && pauseYoutubeOnCollapse) {
+        if(youtube && pauseYoutubeOnCollapse && isOpen === FALSE) {
             const {contentWindow} = youtube;
-            const func = isOpen === FALSE ? 'pauseVideo' : 'playVideo';
-            contentWindow.postMessage(`{"event":"command","func":"${func}","args":""}`, '*');
+            contentWindow.postMessage(JSON.stringify({event: "command", func: "pauseVideo" ,args: ""}), '*');
         }
     };
     ob.hidden = autoCollapse;
