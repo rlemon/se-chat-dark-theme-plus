@@ -209,7 +209,7 @@ const emojiData = [{
   "triggers": [":zzz:", ":sleeping:"]
 }, {
   "emoji": "💩",
-  "triggers": [":hankey:", ":poop:", ":shit:", ":crap:"]
+  "triggers": [":hankey:", ":poop:", ":shit:", ":crap:", ":rujordan:"]
 }, {
   "emoji": "😈",
   "triggers": [":smiling_imp:", ":devil:", ":evil:", ":horns:"]
