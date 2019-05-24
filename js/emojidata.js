@@ -5,7 +5,7 @@ const emojiData = [{
   "triggers": [":grinning:", ":smile:", ":happy:", ":)"]
 }, {
   "emoji": "😬",
-  "triggers": [":grimacing:", ":("]
+  "triggers": [":grimacing:"]
 }, {
   "emoji": "😁",
   "triggers": [":grin:"]
