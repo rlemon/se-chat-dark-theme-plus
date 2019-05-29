@@ -1,6 +1,9 @@
 #sidebar {
 	overflow-y: auto;
 	color: #ddd;
+	bottom: 0px;
+	height: auto;
+	padding-bottom: 88px;
 
   #info {
     #roomtitle {
@@ -9,6 +12,14 @@
 
     #sidebar-menu {
       border-bottom: 1px dotted #222;
+    }
+  }
+
+  #widgets {
+    #starred-posts {
+      li {
+        display: block;
+      }
     }
   }
 }
